@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+    	<meta charset="UTF-8"/>
+        <th:block th:replace="fragments/head"></th:block>
+        <title>Clean Blog - Start Bootstrap Theme</title>
+    </head>
+    <body>
+        <!-- Navigation-->
+        <th:block th:replace="fragments/nav"></th:block>
+        <!-- Page Header-->
+        <th:block th:replace="fragments/header"></th:block>
+        <!-- Main Content-->
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <form action="/board" method="post">
+					<div class="mb-3">
+						<label for="" class="form-label">Title</label>
+						<input name="title" type="text" class="form-control">
+					</div>
+					<div class="mb-3">
+				  		<label for="" class="form-label">contents</label>
+						<textarea name="contents" class="form-control" id="" rows="5"></textarea>
+				  	</div>
+					<div class="d-flex justify-content-end mb-4">
+				  		<button type="submit" class="btn btn-primary">Submit</button>
+				  	</div>
+				</form>
+                <!-- Divider-->
+                <hr class="my-4" />
+
+            </div>
+        </div>
+        <!-- Footer-->
+        <th:block th:replace="fragments/footer"></th:block>
+        <script>
+        </script>
+    </body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+    	<meta charset="UTF-8"/>
+        <th:block th:replace="fragments/head"></th:block>
+        <title>Clean Blog - Start Bootstrap Theme</title>
+    </head>
+    <body>
+        <!-- Navigation-->
+        <th:block th:replace="fragments/nav"></th:block>
+        <!-- Page Header-->
+        <th:block th:replace="fragments/header"></th:block>
+        <!-- Main Content-->
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <!-- Post preview-->
+                    <div class="post-preview">
+                        <a href="/board/post">
+                            <h2 class="post-title">Man must explore, and this is exploration at its greatest</h2>
+                            <h3 class="post-subtitle">Problems look mighty small from 150 miles up</h3>
+                        </a>
+                        <p class="post-meta">
+                            Posted by
+                            <a href="#!">Start Bootstrap</a>
+                            on September 24, 2021
+                        </p>
+                    </div>
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                    <!-- Pager-->
+                    <div class="d-flex justify-content-end mb-4">
+                    	<a id="write" class="btn btn-primary text-uppercase" href="#!">글 쓰기 →</a>
+                    	<a id="more" class="ms-1 btn btn-primary text-uppercase" href="#!">더 보기 →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer-->
+        <th:block th:replace="fragments/footer"></th:block>
+        <script>
+        	document.querySelector('#more').addEventListener('click',function(){
+        		
+        	})
+        	document.querySelector('#write').addEventListener('click',function(){
+        		location.href="/board/form";	
+        	})
+        </script>
+    </body>
+</html>

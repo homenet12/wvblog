@@ -1,22 +1,8 @@
 package com.wv.blog.domain.user;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 
-@Service
-public class UserService implements UserDetailsService{
+public interface UserService extends UserDetailsService{
 
-	@Autowired
-	private UserRepository repository;
-	
-	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		User user = repository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("계정이 존재하지 않습니다."));
-		UserDto userDto = new UserDto(user);
-		return userDto;
-	}
-
+	public void signIn(UserDto user);
 }
