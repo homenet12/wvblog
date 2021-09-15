@@ -23,4 +23,11 @@ public class BoardServiceImpl implements BoardService{
 		return entityList.map(b -> new BoardDto(b));
 	}
 
+	@Override
+	public BoardDto findById(Long id) {
+		Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("글이 존재하지 않습니다."));
+		BoardDto boardDto = new BoardDto(board);
+		return boardDto;
+	}
+
 }

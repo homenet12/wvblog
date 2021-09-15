@@ -5,11 +5,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.ColumnDefault;
 
 import com.wv.blog.config.entity.BaseEntity;
+import com.wv.blog.domain.user.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,4 +36,8 @@ public class Board extends BaseEntity{
 	private String contents;
 	@ColumnDefault(value = "0")
 	private int pageView;
+	
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 }
