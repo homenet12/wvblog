@@ -99,12 +99,12 @@ public class BoardController {
 		return "board/form";
 	}
 	
-	@PostMapping("/board")
-	public String save(@Valid BoardDto boardDto) {
+	@PostMapping("/board/board")
+	public String save(@AuthenticationPrincipal UserDto user, @Valid BoardDto boardDto) {
 		
+		boardDto.setUserDto(user);
 		log.info(boardDto.getTitle());
 		log.info(boardDto.getContents());
-		
 		boardService.save(boardDto);
 		return "redirect://localhost:8080/board";
 	}

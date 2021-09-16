@@ -19,7 +19,7 @@
                     <div class="post-preview">
                         <a th:href="@{'/board/' + ${board.id}}">
                             <h2 class="post-title" th:text="${board.title}"></h2>
-                            <h3 class="post-subtitle" th:text="${board.contents}"></h3>
+                            <!-- <div class="post-subtitle text-wrap" style="height:3rem;" th:utext="${board.contents}"></div> -->
                         </a>
                         <p class="post-meta">
                             Posted by
@@ -27,10 +27,11 @@
                             <th:block th:text="${board.createDate}"></th:block>
                         </p>
                     </div>
-                </th:block>
-                    
                     <!-- Divider-->
                     <hr class="my-4" />
+                </th:block>
+                    
+                  
                     <!-- Pager-->
                     <div class="d-flex justify-content-end mb-4">
                     	<a id="write" class="btn btn-primary text-uppercase" href="#!">글 쓰기 →</a>

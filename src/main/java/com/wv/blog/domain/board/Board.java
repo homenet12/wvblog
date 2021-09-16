@@ -33,6 +33,7 @@ public class Board extends BaseEntity{
 	@NotNull
 	private String title;
 	@NotNull
+	@Column(columnDefinition = "LONGTEXT")
 	private String contents;
 	@ColumnDefault(value = "0")
 	private int pageView;

@@ -27,6 +27,7 @@ public class BoardDto {
 		return new Board().builder()
 				.title(this.title)
 				.contents(this.contents)
+				.user(this.userDto.toEntity())
 				.build();
 	}
 	
