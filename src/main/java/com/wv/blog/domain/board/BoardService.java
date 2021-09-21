@@ -8,4 +8,6 @@ public interface BoardService {
 	void save(BoardDto boardDto);
 	Page<BoardDto> findAllPage(Pageable pageable);
 	BoardDto findById(Long id);
+	void delete(BoardDto board);
+	
 }

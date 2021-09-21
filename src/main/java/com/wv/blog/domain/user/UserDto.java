@@ -61,6 +61,7 @@ public class UserDto implements UserDetails{
 	public UserDto() {}
 	
 	public UserDto(User user) {
+		this.id = user.getId();
 		this.email = user.getEmail();
 		this.password = user.getPassword();
 		this.auth = user.getRole();

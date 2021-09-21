@@ -46,7 +46,7 @@ public class BoardController {
 	 * 메인 페이지 (BOARD LIST) 
 	 * @return
 	 */
-	@GetMapping("/board")
+	@GetMapping(path = {"/board", "/"})
 	public String index(@PageableDefault(page = 0, size = 10) Pageable pageable, Model model) {
 		Page<BoardDto> boardList = boardService.findAllPage(pageable);
 		model.addAttribute("boardList", boardList);
@@ -94,14 +94,33 @@ public class BoardController {
 	@GetMapping("/board/form/{id}")
 	public String updateForm(@AuthenticationPrincipal UserDto user, @PathVariable Long id, Model model) {
 		BoardDto board = boardService.findById(id);
-		if(board.getUserDto().getId() != user.getId()) { throw new IllegalArgumentException("글 등록자만 수정할 수 있습니다.");}
+		log.info("_________________________________");
+		log.info("loginUser : "+ user.getId());
+		log.info("writeUser : "+ board.getUserDto().getId());
+		log.info("true || false :  " + (user.getId() == board.getUserDto().getId()));
+		log.info("_________________________________");
+		
+		if(!board.getUserDto().getId().equals(user.getId())) { throw new IllegalArgumentException("글 등록자만 수정할 수 있습니다.");}
 		model.addAttribute("board", board);
-		return "board/form";
+		return "board/updateform";
 	}
 	
-	@PostMapping("/board/board")
+	/**
+	 * 삭제 요청
+	 * @param id
+	 * @return
+	 */
+	@GetMapping("/board/delete/{id}")
+	public String delete(@AuthenticationPrincipal UserDto user, @PathVariable Long id) {
+		BoardDto board = boardService.findById(id);
+		if(board == null) { throw new IllegalArgumentException("글이 존재하지 않습니다.");}
+		if(!board.getUserDto().getId().equals(user.getId())) { throw new IllegalArgumentException("글 등록자만 삭제할 수 있습니다.");}
+		boardService.delete(board);
+		return "redirect://localhost:8080/board";
+	}
+	
+	@PostMapping("/board/save")
 	public String save(@AuthenticationPrincipal UserDto user, @Valid BoardDto boardDto) {
-		
 		boardDto.setUserDto(user);
 		log.info(boardDto.getTitle());
 		log.info(boardDto.getContents());

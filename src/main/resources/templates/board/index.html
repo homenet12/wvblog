@@ -24,7 +24,7 @@
                         <p class="post-meta">
                             Posted by
                             <a href="#!" th:text="${board.userDto.email}"></a>
-                            <th:block th:text="${board.createDate}"></th:block>
+                            <th:block th:text="${#temporals.format(board.createDate, 'YYYY-MM-dd HH:mm')}"></th:block>
                         </p>
                     </div>
                     <!-- Divider-->
@@ -43,12 +43,15 @@
         <!-- Footer-->
         <th:block th:replace="fragments/footer"></th:block>
         <script>
-        	document.querySelector('#more').addEventListener('click',function(){
-        		
-        	})
-        	document.querySelector('#write').addEventListener('click',function(){
-        		location.href="/board/form";	
-        	})
+        	(function(){
+        		document.querySelector('#more').addEventListener('click',function(){
+            		
+            	})
+            	document.querySelector('#write').addEventListener('click',function(){
+            		location.href="/board/form";	
+            	})
+        	})()
+        	
         </script>
     </body>
 </html>

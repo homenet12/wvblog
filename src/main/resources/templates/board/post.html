@@ -4,6 +4,7 @@
     	<meta charset="UTF-8"/>
         <th:block th:replace="fragments/head"></th:block>
         <title>Clean Blog - Start Bootstrap Theme</title>
+        <link href="/css/post.css" rel="stylesheet" />
     </head>
     <body>
         <!-- Navigation-->
@@ -18,12 +19,13 @@
                     	<h2 th:text="${board.title}"></h2>
                     	<!-- Divider-->
                     	<hr class="my-4" />
-                        <div class="mt-2" th:utext="${board.contents}"></div>
+                        <div class="mt-2 contents" th:utext="${board.contents}"></div>
                     </div>
                 </div>
                 <!-- Pager-->
                 <div class="d-flex justify-content-end mb-4">
-                	<a sec:authorize="isAuthenticated()"  id="write" class="btn btn-primary text-uppercase" th:href="@{'/board/form/' + ${board.id}}">글 수정 →</a>
+                	<a sec:authorize="isAuthenticated()"  id="delete" class="btn btn-primary text-uppercase" th:href="@{'/board/delete/' + ${board.id}}">글 삭제 →</a>
+                	<a sec:authorize="isAuthenticated()"  id="write" class="ms-1 btn btn-primary text-uppercase" th:href="@{'/board/form/' + ${board.id}}">글 수정 →</a>
                 </div>
             </div>
         </article>
