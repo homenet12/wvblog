@@ -14,28 +14,31 @@
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
-                <!-- Post preview-->
-                <th:block th:each="board : ${boardList}">
-                    <div class="post-preview">
-                        <a th:href="@{'/board/' + ${board.id}}">
-                            <h2 class="post-title" th:text="${board.title}"></h2>
-                            <!-- <div class="post-subtitle text-wrap" style="height:3rem;" th:utext="${board.contents}"></div> -->
-                        </a>
-                        <p class="post-meta">
-                            Posted by
-                            <a href="#!" th:text="${board.userDto.email}"></a>
-                            <th:block th:text="${#temporals.format(board.createDate, 'YYYY-MM-dd HH:mm')}"></th:block>
-                        </p>
-                    </div>
-                    <!-- Divider-->
-                    <hr class="my-4" />
-                </th:block>
-                    
-                  
+                	<div id ="boardList">
+		                <!-- Post preview-->
+		                <th:block th:each="board : ${boardList}">
+		                    <div class="post-preview">
+		                        <a th:href="@{'/board/' + ${board.id}}">
+		                            <h2 class="post-title" th:text="${board.title}"></h2>
+		                            <!-- <div class="post-subtitle text-wrap" style="height:3rem;" th:utext="${board.contents}"></div> -->
+		                        </a>
+		                        <p class="post-meta">
+		                            Posted by
+		                            <a href="#!" th:text="${board.userDto.email}"></a>
+		                            <!-- ${#temporals.format(board.createDate, 'YYYY-MM-dd HH:mm')} -->
+		                            <th:block th:text="${board.createDate}"></th:block>
+		                        </p>
+		                    </div>
+		                    <!-- Divider-->
+		                    <hr class="my-4" />
+		                </th:block>
+					</div>
                     <!-- Pager-->
                     <div class="d-flex justify-content-end mb-4">
                     	<a id="write" class="btn btn-primary text-uppercase" href="#!">글 쓰기 →</a>
-                    	<a id="more" class="ms-1 btn btn-primary text-uppercase" href="#!">더 보기 →</a>
+                    	<th:block th:if="${boardList.totalElements > boardList.size}">
+                    		<a id="more" class="ms-1 btn btn-primary text-uppercase" href="#!">더 보기 →</a>
+                    	</th:block>
                     </div>
                 </div>
             </div>
@@ -44,8 +47,68 @@
         <th:block th:replace="fragments/footer"></th:block>
         <script>
         	(function(){
-        		document.querySelector('#more').addEventListener('click',function(){
-            		
+        		let page = 1;
+        		let moreButton = document.querySelector('#more');
+        		moreButton.addEventListener('click',function(){
+        			var httpRequest = new XMLHttpRequest();
+        			if (!httpRequest) {//실패
+        				return false;
+        			}
+        			httpRequest.onreadystatechange = function() {
+        				if (httpRequest.readyState === XMLHttpRequest.DONE) {
+        					if (httpRequest.status === 200) {
+        						page++;
+        						console.log(httpRequest);
+        						console.log(JSON.parse(httpRequest.responseText));
+        						let data = JSON.parse(httpRequest.responseText);
+        						if(page >= data.totalPages){
+        							moreButton.style.display = 'none';
+        						}
+        						const boardList = document.querySelector('#boardList');
+        						
+        						for(i=0; i<data.content.length; i++){
+        							let layoutDiv = document.createElement('div'); 
+            						layoutDiv.className = 'post-preview';
+            						
+            						let aTag = document.createElement('a');
+            						aTag.href='/board/'+data.content[i].id;
+            						
+            						let h2Title = document.createElement('h2');
+            						h2Title.className = 'post-title';
+            						
+            						let title = document.createTextNode(data.content[i].title);
+            						
+            						h2Title.appendChild(title);
+            						aTag.appendChild(h2Title);
+            						layoutDiv.appendChild(aTag);
+            						
+            						let pTag = document.createElement('p');
+            						pTag.className = 'post-meta';
+            						
+            						let writer = document.createTextNode("Posted by ");
+            						let aTagWriter = document.createElement('a');
+            						aTagWriter.href='';
+            						
+            						let aTagWriterDate = document.createTextNode(" " +data.content[i].createDate);
+            						aTagWriter.appendChild(document.createTextNode(data.content[i].userDto.email));
+            						pTag.appendChild(writer);
+            						pTag.appendChild(aTagWriter);
+            						pTag.appendChild(aTagWriterDate);
+            						layoutDiv.appendChild(pTag);
+            						let hr = document.createElement('hr');
+            						hr.className = 'my-4';
+            						
+            						boardList.append(layoutDiv);
+            						boardList.append(hr);
+        						}
+        						
+        					} else {
+        						alert('request에 뭔가 문제가 있어요.');
+        					}
+        				}
+        			};
+        			httpRequest.open('POST', '/board?page='+page);
+        			httpRequest.send();
             	})
             	document.querySelector('#write').addEventListener('click',function(){
             		location.href="/board/form";	

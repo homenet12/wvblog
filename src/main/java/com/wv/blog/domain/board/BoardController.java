@@ -47,7 +47,7 @@ public class BoardController {
 	 * @return
 	 */
 	@GetMapping(path = {"/board", "/"})
-	public String index(@PageableDefault(page = 0, size = 10) Pageable pageable, Model model) {
+	public String index(@PageableDefault(page = 0, size = 5) Pageable pageable, Model model) {
 		Page<BoardDto> boardList = boardService.findAllPage(pageable);
 		model.addAttribute("boardList", boardList);
 		return "board/index";

@@ -1,6 +1,7 @@
 package com.wv.blog.domain.board;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -17,7 +18,7 @@ public class BoardDto {
 	private String title;
 	@NotBlank
 	private String contents;
-	private LocalDateTime createDate;
+	private String createDate;
 	
 	private int pageView = 0;
 	
@@ -41,7 +42,7 @@ public class BoardDto {
 		this.title = board.getTitle(); 
 		this.contents = board.getContents();
 		this.pageView = board.getPageView();
-		this.createDate = board.getCreatedDate();
+		this.createDate = board.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 		this.userDto = new UserDto(board.getUser());
 	}
 }
