@@ -34,15 +34,20 @@ public class BoardRestController {
 	public String imageUpload(MultipartFile multipartFile, HttpServletRequest request){
 		String prefix = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf(".") + 1, multipartFile.getOriginalFilename().length());
 		String filename = UUID.randomUUID().toString() + "." + prefix;
-		String filePath = uploadUrl + filename;
-		File uploadFile = new File(filePath);
-		String uploadPath = "/upload/" + filename;
+		
+		String uploadUrlPath = request.getSession().getServletContext().getRealPath("/uploadFile");
+		File folder = new File(uploadUrlPath);
+		if(folder.isDirectory()) {
+			folder.mkdir();
+		}
+		String realPath = uploadUrlPath+"/"+filename;
+		File uploadFile = new File(realPath);
 		try {
 			multipartFile.transferTo(uploadFile);
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		}
-		return uploadPath;
+		return realPath;
 	}
 	
 	@PostMapping(path = "/board")

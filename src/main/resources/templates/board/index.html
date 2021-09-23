@@ -36,9 +36,9 @@
                     <!-- Pager-->
                     <div class="d-flex justify-content-end mb-4">
                     	<a id="write" class="btn btn-primary text-uppercase" href="#!">글 쓰기 →</a>
-                    	<th:block th:if="${boardList.totalElements > boardList.size}">
-                    		<a id="more" class="ms-1 btn btn-primary text-uppercase" href="#!">더 보기 →</a>
-                    	</th:block>
+                    	<!--  <th:block th:if="${boardList.totalElements > boardList.size}"></th:block> -->
+                    	<a th:style="${boardList.totalElements > boardList.size ? 'display:block' : 'display:none'}" id="more" class="ms-1 btn btn-primary text-uppercase" href="#!">더 보기 →</a>
+                    	
                     </div>
                 </div>
             </div>
@@ -49,7 +49,7 @@
         	(function(){
         		let page = 1;
         		let moreButton = document.querySelector('#more');
-        		moreButton.addEventListener('click',function(){
+        		document.querySelector('#more').addEventListener('click',function(){
         			var httpRequest = new XMLHttpRequest();
         			if (!httpRequest) {//실패
         				return false;
