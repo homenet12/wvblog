@@ -70,9 +70,12 @@ public class BoardController {
 	 * @return
 	 */
 	@GetMapping("/board/{id}")
-	public String post(@PathVariable Long id, Model model) {
+	public String post(@PathVariable Long id, @AuthenticationPrincipal UserDto user, Model model) {
 		BoardDto board = boardService.findById(id);
 		model.addAttribute("board", board);
+		if(user != null) {
+			model.addAttribute("writeId",user.getId());
+		}
 		return "board/post";
 	}
 	

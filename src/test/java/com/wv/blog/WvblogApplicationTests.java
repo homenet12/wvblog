@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.wv.blog.domain.user.Role;
 import com.wv.blog.domain.user.UserDto;
 
-@SpringBootTest
+@SpringBootTest()
 class WvblogApplicationTests {
 
 	@Test

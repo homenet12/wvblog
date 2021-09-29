@@ -5,6 +5,7 @@
         <th:block th:replace="fragments/head"></th:block>
         <title>Clean Blog - Start Bootstrap Theme</title>
         <link href="/css/post.css" rel="stylesheet" />
+        <link href="/css/common.css" rel="stylesheet" />
     </head>
     <body>
         <!-- Navigation-->
@@ -15,21 +16,62 @@
         <article class="mb-4">
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">
                     	<h2 th:text="${board.title}"></h2>
                     	<!-- Divider-->
                     	<hr class="my-4" />
                         <div class="mt-2 contents" th:utext="${board.contents}"></div>
-                    </div>
                 </div>
                 <!-- Pager-->
                 <div class="d-flex justify-content-end mb-4">
-                	<a sec:authorize="isAuthenticated()"  id="delete" class="btn btn-primary text-uppercase" th:href="@{'/board/delete/' + ${board.id}}">글 삭제 →</a>
-                	<a sec:authorize="isAuthenticated()"  id="write" class="ms-1 btn btn-primary text-uppercase" th:href="@{'/board/form/' + ${board.id}}">글 수정 →</a>
+                	
+                	<th:block th:if="${writeId == board.userDto.id}">
+                		<a sec:authorize="isAuthenticated()"  id="write" class="btn btn-primary text-uppercase" th:href="@{'/board/form/' + ${board.id}}">글 수정 →</a>
+                		<a sec:authorize="isAuthenticated()"  id="delete" class="ms-1 btn btn-primary text-uppercase" th:href="@{'/board/delete/' + ${board.id}}">글 삭제 →</a>
+                	</th:block>
                 </div>
+                <div class="row gx-4 gx-lg-5 justify-content-center reply">
+                	<hr class="my-4" />
+                	<!-- 댓글 입력 영역 -->
+                	<form>
+	                	<div>
+	                		<input type="text" class="mb-2 form-control" placeholder="Name">
+	                		<textarea class="mb-2 form-control" placeholder="Contents"></textarea>
+	                		<div class="d-flex justify-content-end mb-4">
+	                			<a id="writeReply" class="ms-1 btn btn-primary text-uppercase">댓글 등록 →</a>
+	                		</div>
+	                	</div>
+                	</form>
+                	<hr class="my-4" />
+                	<!-- 댓글 입력 영역 -->
+                	<!-- 댓글 영역 -->
+                	<div id="reply-layout">
+                		<h5> ~~ 님</h5>
+	                	<div class="mt-2 contents" >댓글 내용</div>
+	                	<hr class="my-4" />
+                	</div>
+                	<!-- //댓글 영역 -->
+                </div>
+                
             </div>
         </article>
         <!-- Footer-->
         <th:block th:replace="fragments/footer"></th:block>
+        <script src="/js/ajax.js"></script>
+        <script>
+        	document.querySelector('#writeReply').addEventListener('click',function(){
+        	
+        		var data = new FormData();
+        		data.append('board_id',2)
+        		data.append('name','234');
+        		data.append('contents','3456');
+        		
+        		ajaxRequest(data, addReply ,'/boardReply','POST');
+        	})
+        	
+        	function addReply(response){
+        		console.log(response);
+        	}
+        	
+        </script>
     </body>
 </html>

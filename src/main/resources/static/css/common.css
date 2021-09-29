@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+input.form-control {
+	border: 0;
+	border-bottom: 1px solid #ccd4da;
+	font-size: 1.25rem;
+}
+textarea.form-control {
+	border-radius: 0.25rem;
+	
+}
